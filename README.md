@@ -2,7 +2,11 @@
 
 **CityStack Agent** is a small Python-based tool that helps people find civic services like hospitals during large events — starting with the **Kumbh Mela 2027 in Nashik**.
 
-It uses real-time data and can run on local devices, even without internet.
+It uses real-time data and can run on local devices, with Internet.
+
+---
+
+This project uses the **Model Context Protocol (MCP)** — a simple way to define and run local AI tools, like "find hospitals in Nashik", from chat interfaces or other apps. MCP makes it easy to connect real data and actions to AI agents.
 
 ---
 
@@ -10,8 +14,14 @@ It uses real-time data and can run on local devices, even without internet.
 
 - 🔍 Find nearby hospitals in Nashik using real data
 - 🛠️ Works with Claude Desktop (or CLI) as a tool
-- ⚙️ Built using FastAPI and Python
-- 🔗 Can connect to live civic data (ArcGIS)
+- ⚙️ Built using Python and the MCP tool server
+- 🔗 Connects to live civic data (ArcGIS)
+
+---
+
+## ℹ️ About MCP
+
+MCP (Model Context Protocol) is a lightweight way to define tools that AI models (like Claude or GPT) can call to fetch live data or take actions. This project includes a working MCP tool that looks up hospitals using real-time data.
 
 ---
 
@@ -125,12 +135,13 @@ uv run server.py
 
 ## 🛣️ What's Next
 
-Future Scope
+Future Scope:
 
-- 🚽 Toilet & water finder
+- 🚽 Toilet finder
+- 🚰 Drinking Water finder
 - 👮 Nearby police stations
 - 📢 Emergency alert system
-- 🛐 Cultural site guide 
+- 🛐 Cultural site guide
 
 ---
 
