@@ -1,0 +1,13 @@
+[project]
+name = "citystack-agent-kumbh-nashik"
+version = "0.1.0"
+description = "Citystack MCP server"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]>=1.6.0",
+    "httpx",
+    "fastapi",
+    "uvicorn",
+]
+
+[tool.uv.workspace]
