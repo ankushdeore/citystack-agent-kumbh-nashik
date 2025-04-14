@@ -21,9 +21,14 @@ async def homepage(request: Request) -> HTMLResponse:
       <body>
         <h1>✅ CityStack Agent for Kumbh Nashik 2027</h1>
         <p>This server is running and MCP-ready.</p>
+        <p>
+          <img src="http://nanda-registry.com/api/v1/verification/badge/6c8bef94-6de4-44d4-855a-237ed103c513/"
+               alt="Verified MCP Server" />
+        </p>
       </body>
     </html>
     """)
+
 
 from starlette.responses import PlainTextResponse  # ✅ Add this at the top with your other imports
 
