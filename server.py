@@ -1,21 +1,22 @@
-from tools.find_civic_resource import register_tool as civic_tool
+from fastapi import FastAPI
 from mcp.server.fastmcp import FastMCP
+from tools.find_civic_resource import register_tool as civic_tool
 
-# Build MCP object with tool name
-mcp = FastMCP("CityStackAgentServer")
+# Create FastAPI app
+app = FastAPI()
+
+# Attach MCP to FastAPI
+mcp = FastMCP("CityStackAgent", app=app)
 
 # Register tool
 civic_tool(mcp)
 
-# ✅ Export full FastAPI app (with MCP routes + health)
-app = mcp.as_fastapi_app()
-
-# Optional: root route
+# ✅ Root health check
 @app.get("/")
 async def root():
     return {"status": "CityStack MCP server running"}
 
-# Optional: local dev
+# ✅ For local testing
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8090)
