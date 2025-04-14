@@ -2,10 +2,10 @@ import httpx
 import random
 from mcp.server.fastmcp import FastMCP
 
-# Simple in-memory cache
+# In-memory cache to reduce API calls
 cache = {}
 
-# Add noise for privacy
+# Add small noise to coordinates to preserve privacy
 def add_noise(lat, lon):
     if lat is None or lon is None:
         return lat, lon
@@ -13,16 +13,26 @@ def add_noise(lat, lon):
     lon += random.uniform(-0.001, 0.001)
     return round(lat, 6), round(lon, 6)
 
+# Register MCP tool with the FastMCP server
 def register_tool(mcp: FastMCP):
-    @mcp.tool()
+    @mcp.tool(
+        description="Find civic resources like hospitals in Nashik using real-time ArcGIS data.",
+        examples=[
+            {
+                "input": {"resource_type": "hospital"},
+                "output": "Hospital A – Address 📍 (20.123456, 73.987654)"
+            }
+        ]
+    )
     async def find_civic_resource(resource_type: str) -> str:
         resource_type = resource_type.lower()
 
         if "hospital" in resource_type:
-            # Return from cache if available
+            # Check cache
             if resource_type in cache:
                 return cache[resource_type]
 
+            # ArcGIS API URL
             url = "https://services3.arcgis.com/xDMb8Us7jzsHQ7bn/arcgis/rest/services/Nashik_Hospitals/FeatureServer/0/query"
             params = {
                 "where": "1=1",
@@ -36,11 +46,12 @@ def register_tool(mcp: FastMCP):
                     response.raise_for_status()
                     data = response.json()
                     features = data.get("features", [])
+
                     if not features:
                         return "No hospitals found in the dataset."
 
                     hospitals = []
-                    for feature in features[:10]:  # Limit to 10 hospitals
+                    for feature in features[:10]:  # Limit to 10 results
                         attr = feature.get("attributes", {})
                         name = attr.get("Hospitals_Name", "Unknown")
                         address = attr.get("Address", "No address listed")
@@ -49,11 +60,10 @@ def register_tool(mcp: FastMCP):
                         hospitals.append(f"{name} - {address} {location}")
 
                     result = "\n".join(hospitals)
-                    cache[resource_type] = result  # Store in cache
+                    cache[resource_type] = result  # Save to cache
                     return result
 
             except Exception as e:
-                return f"Error fetching hospital data: {e}"
+                return f"Error fetching data: {e}"
 
-        else:
-            return f"Resource type '{resource_type}' is not supported yet."
+        return f"Resource type '{resource_type}' is not supported yet."
