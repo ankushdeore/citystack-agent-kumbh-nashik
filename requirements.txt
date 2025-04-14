@@ -1,5 +1,4 @@
- 
-httpx
+mcp[cli]
 fastapi
+httpx
 uvicorn
-mcp
