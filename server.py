@@ -9,11 +9,11 @@ import uvicorn
 
 from tools.find_civic_resource import register_tool as civic_tool
 
-# Create MCP server
+# Create MCP server and register tool
 mcp = FastMCP("CityStackAgent")
 civic_tool(mcp)
 
-# HTML homepage
+# HTML homepage for humans
 async def homepage(request: Request) -> HTMLResponse:
     return HTMLResponse("""
     <html><head><title>CityStack MCP Server</title></head>
@@ -21,7 +21,7 @@ async def homepage(request: Request) -> HTMLResponse:
     <p>This server is running and MCP-ready.</p></body></html>
     """)
 
-# Create a Starlette app that wraps the MCP server using SSE transport
+# Starlette app with MCP SSE support
 def create_starlette_app(mcp_server: Server) -> Starlette:
     sse = SseServerTransport("/messages/")
 
@@ -46,7 +46,9 @@ def create_starlette_app(mcp_server: Server) -> Starlette:
         ]
     )
 
-# Entrypoint for Render or CLI
+# ✅ Expose ASGI app for Render (important!)
+app = create_starlette_app(mcp._mcp_server)
+
+# ✅ Optional: local run support
 if __name__ == "__main__":
-    starlette_app = create_starlette_app(mcp._mcp_server)
-    uvicorn.run(starlette_app, host="0.0.0.0", port=8080)
+    uvicorn.run(app, host="0.0.0.0", port=8080)
