@@ -25,7 +25,8 @@ async def homepage(request: Request) -> HTMLResponse:
     </html>
     """)
 
-# 🚀 Create Starlette app with SSE integration
+from starlette.responses import PlainTextResponse  # ✅ Add this at the top with your other imports
+
 def create_starlette_app(mcp_server: Server) -> Starlette:
     sse = SseServerTransport("/messages/")
 
@@ -46,9 +47,11 @@ def create_starlette_app(mcp_server: Server) -> Starlette:
         routes=[
             Route("/", homepage),
             Route("/sse", handle_sse),
+            Route("/mcp-verification.txt", lambda request: PlainTextResponse("y2CL3jYxR9FIrtS0ER62Srru8AH3rOBmdnVWRKJfh6U")),  # ✅ Add this line
             Mount("/messages/", app=sse.handle_post_message)
         ]
     )
+
 
 # ✅ Expose ASGI app for Render or any MCP host
 app = create_starlette_app(mcp._mcp_server)
