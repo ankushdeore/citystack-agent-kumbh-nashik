@@ -131,6 +131,11 @@ port = int(os.environ.get("PORT", 8000))
 uv run server.py
 ```
 
+### 🔧 MCP Modifications
+
+- ✅ Caching: repeated queries return from memory
+- ✅ Privacy: added small random noise to hospital coordinates
+
 ---
 
 ## 🛣️ What's Next
