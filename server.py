@@ -13,3 +13,7 @@ app = mcp.sse_app()  # ASGI-compatible
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8090)
+# Add health endpoint
+@app.get("/")
+async def root():
+    return {"status": "CityStack MCP server running"}
