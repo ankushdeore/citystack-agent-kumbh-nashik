@@ -1,17 +1,18 @@
-# Python
-__pycache__/
-*.py[cod]
+# Virtual environments
 .venv/
 .env/
-.uv/
+Scripts/
+pyvenv.cfg
 
-# Build
-build/
-dist/
-*.egg-info/
+# Lock and temp files
+.lock
+uv.lock
+*.lock
 
-# Editor/OS
-.vscode/
-.idea/
+# Python cache
+__pycache__/
+*.py[cod]
+
+# System files
 .DS_Store
 Thumbs.db
