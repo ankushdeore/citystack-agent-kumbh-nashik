@@ -1,5 +1,5 @@
 # 🏙️ CityStack Agent – Kumbh Nashik 2027
-<img src="http://nanda-registry.com/api/v1/verification/badge/6c8bef94-6de4-44d4-855a-237ed103c513/" alt="Verified MCP Server" />
+
 
 **CityStack Agent** is a small Python-based tool that helps people find civic services like hospitals during large events — starting with the **Kumbh Mela 2027 in Nashik**.
 
